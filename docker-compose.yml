@@ -1,0 +1,24 @@
+version: '3.0'
+
+services:
+  mongo0:
+      restart: always
+      container_name: mongo0
+      hostname: mongo0
+      image: mongo:3.0.4
+      volumes:
+        - ./restore:/restore
+        - ./backups:/usr/backups:rw
+        - ./data/mongo0:/data/db:rw
+        - /var/run/docker.sock:/var/run/docker.sock
+      ports:
+        - "27017:27017"
+      domainname: mongo0
+
+  nodeapp:
+      restart: always
+      build: ./nodeapp
+      container_name: node-app
+      ports:
+        - 8000:8000
+      
